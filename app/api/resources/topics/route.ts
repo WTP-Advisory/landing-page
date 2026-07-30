@@ -31,7 +31,10 @@ export async function GET() {
   try {
     const res = await fetch(
       `${API_ORIGIN}/api/public/${BRAND_SLUG}/topics/latest-articles?perTopic=6`,
-      { next: { revalidate } }
+      {
+        headers: { "x-aeo-secret-key": process.env.AEO_SECRET_KEY ?? "" },
+        next: { revalidate },
+      },
     );
     if (!res.ok) {
       return NextResponse.json([]);
